@@ -15,6 +15,9 @@ const store = new pgSession({
 
 const app = express();
 
+app.set('view engine', 'ejs');
+app.set('views', process.cwd() + '/views');
+
 app.use(express.urlencoded());
 app.use(express.json());
 
