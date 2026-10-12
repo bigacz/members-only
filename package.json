@@ -20,8 +20,11 @@
   },
   "homepage": "https://github.com/bigacz/members-only#readme",
   "dependencies": {
+    "connect-pg-simple": "^10.0.0",
     "ejs": "^7.0.1",
-    "express": "^5.3.0"
+    "express": "^5.3.0",
+    "express-session": "^1.19.0",
+    "pg": "^8.23.1"
   },
   "devDependencies": {
     "@eslint/css": "^2.0.0",
