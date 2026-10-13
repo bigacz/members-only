@@ -2,6 +2,7 @@ import express from 'express';
 import expressSession from 'express-session';
 import { Pool } from 'pg';
 import pgConnect from 'connect-pg-simple';
+import mainRouter from './routes/mainRouter.js';
 
 process.loadEnvFile('./.env');
 
@@ -34,9 +35,7 @@ app.use(
   }),
 );
 
-app.get('/', (req, res) => {
-  res.send('h');
-});
+app.use(mainRouter);
 
 const port = process.env.APP_PORT || 3000;
 app.listen(port, (error) => {
