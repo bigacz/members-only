@@ -1,17 +1,15 @@
 import express from 'express';
 import expressSession from 'express-session';
-import { Pool } from 'pg';
 import pgConnect from 'connect-pg-simple';
 import mainRouter from './routes/mainRouter.js';
-
-process.loadEnvFile('./.env');
-
-const pgPool = new Pool({ connectionString: process.env.PG_CONNECTION_STRING });
+import dbPool from './database/pool.js';
+import db from './database/queries.js';
+import bcrypt from 'bcryptjs';
 
 const pgSession = pgConnect(expressSession);
 
 const store = new pgSession({
-  pool: pgPool,
+  pool: dbPool,
 });
 
 const app = express();
@@ -34,6 +32,46 @@ app.use(
     },
   }),
 );
+
+import passport from 'passport';
+import LocalStrategy from 'passport-local';
+
+passport.use(
+  new LocalStrategy(
+    {
+      usernameField: 'email',
+      passwordField: 'password',
+    },
+    async (username, password, done) => {
+      try {
+        const user = await db.getUserByEmail(username);
+        if (!user) {
+          return done(null, false, { message: 'Incorrect email or password' });
+        }
+
+        const isCorrect = await bcrypt.compare(password, user.hashed_password);
+
+        if (isCorrect) {
+          return done(null, user);
+        } else {
+          return done(null, false, { message: 'Incorrect email or password' });
+        }
+      } catch (error) {
+        return done(error);
+      }
+    },
+  ),
+);
+
+passport.serializeUser((user, done) => {
+  done(null, user.user_id);
+});
+
+passport.deserializeUser((userId, done) => {
+  const user = db.getUserById(userId);
+
+  done(null, user);
+});
 
 app.use(mainRouter);
 
