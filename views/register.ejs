@@ -5,10 +5,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Register</title>
+  <script src="/scripts/register.js" defer></script>
 </head>
 
 <body>
-  <form action="" method="POST">
+  <form action="/register" method="POST" id="form">
+    <ul id="form_error-panel"></ul>
     <div>
       <label for="firstname">First name:</label>
       <input type="text" name="firstname" id="firstname">

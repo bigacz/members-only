@@ -1,22 +1,34 @@
 import passport from 'passport';
 import bcrypt from 'bcryptjs';
 import db from '../database/queries.js';
+import { body, matchedData, validationResult } from 'express-validator';
+import { registerValidators } from './validators.js';
+import { response } from 'express';
 
-function getRegister(req, res) {
+const getRegister = (req, res) => {
   res.render('register');
-}
+};
 
-async function postRegister(req, res) {
-  const { email, password, firstname, lastname } = req.body;
+const postRegister = [
+  ...registerValidators,
+  async (req, res) => {
+    const result = validationResult(req);
+    if (!result.isEmpty()) {
+      return res.status(400).send({ errors: result.array() });
+    }
+    const { email, password, firstname, lastname } = matchedData(req);
 
-  const hashedPassword = await bcrypt.hashSync(password, 10);
+    const hashedPassword = await bcrypt.hashSync(password, 10);
 
-  await db.addUser(email, hashedPassword, firstname, lastname);
-}
+    await db.addUser(email, hashedPassword, firstname, lastname);
 
-function getLogin(req, res) {
+    res.status(201).send();
+  },
+];
+
+const getLogin = (req, res) => {
   return res.render('login');
-}
+};
 
 const postLogin = [
   passport.authenticate('local'),
@@ -26,13 +38,13 @@ const postLogin = [
   },
 ];
 
-function getNewMessage(req, res) {
+const getNewMessage = (req, res) => {
   return res.render('newMessage');
-}
+};
 
-function postNewMessage(req, res) {
+const postNewMessage = (req, res) => {
   //todo
-}
+};
 
 export default {
   getRegister,

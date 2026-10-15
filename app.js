@@ -13,6 +13,8 @@ app.set('views', process.cwd() + '/views');
 app.use(express.urlencoded());
 app.use(express.json());
 
+app.use(express.static('public'));
+
 app.use(
   expressSession({
     store: new pgSession({ pool: dbPool }),
