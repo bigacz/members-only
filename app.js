@@ -3,6 +3,7 @@ import expressSession from 'express-session';
 import mainRouter from './routes/mainRouter.js';
 import dbPool from './database/pool.js';
 import pgConnect from 'connect-pg-simple';
+import './config/passport.js';
 const pgSession = pgConnect(expressSession);
 
 const app = express();
