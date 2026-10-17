@@ -6,7 +6,7 @@ const postMessage = [
   ...postMessageValidators,
   async (req, res) => {
     if (!req.isAuthenticated()) {
-      res.status(401).send('Unauthorized');
+      return res.status(401).send('Unauthorized');
     }
 
     const result = validationResult(req);
@@ -19,7 +19,7 @@ const postMessage = [
 
     await db.addMessage(req.user.user_id, title, message);
 
-    res.status(201).send();
+    return res.status(201).send();
   },
 ];
 
@@ -32,7 +32,11 @@ const getMessages = (req, res) => {
 };
 
 const getMessageNew = (req, res) => {
-  res.render('newMessage');
+  if (req.isAuthenticated()) {
+    return res.render('newMessage');
+  } else {
+    return res.render('notAuthorized');
+  }
 };
 
 export default {
