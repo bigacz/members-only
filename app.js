@@ -2,8 +2,8 @@ import express from 'express';
 import expressSession from 'express-session';
 import mainRouter from './routes/mainRouter.js';
 import dbPool from './database/pool.js';
+import passport from 'passport';
 import pgConnect from 'connect-pg-simple';
-import './config/passport.js';
 const pgSession = pgConnect(expressSession);
 
 const app = express();
@@ -28,6 +28,9 @@ app.use(
     },
   }),
 );
+
+import './config/passport.js';
+app.use(passport.session());
 
 app.use(mainRouter);
 

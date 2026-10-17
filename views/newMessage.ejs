@@ -5,12 +5,22 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Create new message:</title>
+  <script src="/scripts/newMessage.js" defer></script>
 </head>
 
 <body>
-  <form action="" method="POST">
-    <label for="message"></label>
-    <textarea name="message" id="message"></textarea>
+  <form id="form">
+    <ul id="form_error-panel"></ul>
+    <div>
+      <label for="title">Title</label>
+      <input type="text" name="title" id="title">
+    </div>
+
+    <div>
+      <label for="message">Message</label>
+      <textarea name="message" id="message"></textarea>
+    </div>
+
     <button type="submit">Send message</button>
   </form>
 

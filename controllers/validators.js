@@ -84,4 +84,21 @@ const loginValidators = [
     .escape(),
 ];
 
-export { registerValidators, loginValidators };
+const postMessageValidators = [
+  body('title')
+    .trim()
+    .notEmpty()
+    .withMessage('Title is required')
+    .isLength({ min: 3, max: 40 })
+    .withMessage('Title must be between 3 and 40 characters')
+    .escape(),
+  body('message')
+    .trim()
+    .notEmpty()
+    .withMessage('Message is required')
+    .isLength({ min: 3, max: 400 })
+    .withMessage('Message must be between 3 and 400 characters')
+    .escape(),
+];
+
+export { registerValidators, loginValidators, postMessageValidators };

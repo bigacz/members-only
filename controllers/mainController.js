@@ -3,7 +3,6 @@ import bcrypt from 'bcryptjs';
 import db from '../database/queries.js';
 import { body, matchedData, validationResult } from 'express-validator';
 import { registerValidators, loginValidators } from './validators.js';
-import { response } from 'express';
 
 const getRegister = (req, res) => {
   res.render('register');
@@ -29,6 +28,7 @@ const postRegister = [
 const getLogin = (req, res) => {
   return res.render('login');
 };
+
 const postLogin = [
   ...loginValidators,
   async (req, res, next) => {
@@ -50,21 +50,10 @@ const postLogin = [
   },
 ];
 
-const getNewMessage = (req, res) => {
-  return res.render('newMessage');
-};
-
-const postNewMessage = (req, res) => {
-  //todo
-};
-
 export default {
   getRegister,
   postRegister,
 
   getLogin,
   postLogin,
-
-  getNewMessage,
-  postNewMessage,
 };

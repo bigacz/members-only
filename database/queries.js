@@ -24,8 +24,18 @@ async function getUserById(userId) {
   return query.rows[0];
 }
 
+async function addMessage(userId, title, message_text) {
+  const timestamp = new Date().valueOf();
+
+  const query = await dbPool.query(
+    'INSERT INTO messages(user_id, title, message_text, timestamp) VALUES($1, $2, $3, $4);',
+    [userId, title, message_text, timestamp],
+  );
+}
+
 export default {
   getUserByEmail,
   getUserById,
   addUser,
+  addMessage,
 };

@@ -1,7 +1,10 @@
 import router from 'express';
 import mainController from '../controllers/mainController.js';
+import messageRouter from './messageRouter.js';
 
 const mainRouter = router();
+
+mainRouter.use(messageRouter);
 
 mainRouter.get('/register', mainController.getRegister);
 
@@ -11,14 +14,8 @@ mainRouter.get('/login', mainController.getLogin);
 
 mainRouter.post('/login', mainController.postLogin);
 
-// PROTECTED ROUTES
-
-mainRouter.get('/newMessage', mainController.getNewMessage);
-
-mainRouter.post('/newMessage', mainController.postNewMessage);
-
 mainRouter.get('/', (req, res) => {
-  // TODO RENDER message board
+  res.redirect('/messages');
 });
 
 export default mainRouter;
