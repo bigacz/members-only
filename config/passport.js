@@ -1,6 +1,6 @@
 import passport from 'passport';
 import LocalStrategy from 'passport-local';
-import db from './database/queries.js';
+import db from '../database/queries.js';
 import bcrypt from 'bcryptjs';
 
 passport.use(
@@ -34,8 +34,8 @@ passport.serializeUser((user, done) => {
   done(null, user.user_id);
 });
 
-passport.deserializeUser((userId, done) => {
-  const user = db.getUserById(userId);
+passport.deserializeUser(async (userId, done) => {
+  const user = await db.getUserById(userId);
 
   done(null, user);
 });

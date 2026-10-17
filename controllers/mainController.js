@@ -2,7 +2,7 @@ import passport from 'passport';
 import bcrypt from 'bcryptjs';
 import db from '../database/queries.js';
 import { body, matchedData, validationResult } from 'express-validator';
-import { registerValidators } from './validators.js';
+import { registerValidators, loginValidators } from './validators.js';
 import { response } from 'express';
 
 const getRegister = (req, res) => {
@@ -29,12 +29,24 @@ const postRegister = [
 const getLogin = (req, res) => {
   return res.render('login');
 };
-
 const postLogin = [
+  ...loginValidators,
+  async (req, res, next) => {
+    const result = validationResult(req);
+
+    if (!result.isEmpty()) {
+      return res.status(400).send({ errors: result.array() });
+    }
+
+    next();
+  },
   passport.authenticate('local'),
-  (req, res, user) => {
-    console.log();
-    console.log(req.isAuthenticated());
+  (req, res) => {
+    if (req.isAuthenticated()) {
+      res.status(200).send();
+    } else {
+      res.status(401).send();
+    }
   },
 ];
 

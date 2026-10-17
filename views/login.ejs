@@ -5,10 +5,14 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Log in</title>
+  <script src="/scripts/login.js" defer></script>
+
 </head>
 
 <body>
-  <form action="" method="POST">
+  <form id="form">
+    <ul id="form_error-panel"></ul>
+
     <div>
       <label for="email">Email:</label>
       <input type="email" name="email" id="email">

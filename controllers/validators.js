@@ -59,4 +59,29 @@ const registerValidators = [
     .withMessage('Passwords must match'),
 ];
 
-export { registerValidators };
+const loginValidators = [
+  body('password')
+    .trim()
+    .notEmpty()
+    .withMessage('Password is required')
+    .isLength({
+      min: 3,
+      max: 254,
+    })
+    .withMessage('Password field must be between 3 and 30 characters')
+    .escape(),
+  body('email')
+    .trim()
+    .notEmpty()
+    .withMessage('Email is required')
+    .isEmail()
+    .withMessage('Email must be a valid email')
+    .isLength({
+      min: 3,
+      max: 254,
+    })
+    .withMessage('Email must be 3 and 254 characters')
+    .escape(),
+];
+
+export { registerValidators, loginValidators };
