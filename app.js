@@ -32,6 +32,11 @@ app.use(
 import './config/passport.js';
 app.use(passport.session());
 
+app.use((req, res, next) => {
+  res.locals.user = req.user;
+
+  next();
+});
 app.use(mainRouter);
 
 const port = process.env.APP_PORT || 3000;

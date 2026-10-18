@@ -1,0 +1,14 @@
+<nav>
+  <script src="/scripts/navbar.js" defer></script>
+  <a href="/messages">Messages</a>
+  <% if(!locals.user) { %>
+  <a href="/login">Log in</a>
+  <a href="/register">Register</a>
+  <% } %>
+  <% if(locals?.user.is_member) { %>
+  <a href="/message/new">New message</a>
+  <% } %>
+  <% if(locals.user) { %>
+  <button id="logout">Log out</button>
+  <% } %>
+</nav>

@@ -8,6 +8,8 @@
 </head>
 
 <body>
+  <%- include('components/navbar.ejs') %>
+
   <% locals.messages.forEach((message) => { %>
   <div>
     <h2><%= message.title %></h2>
