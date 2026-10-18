@@ -27,7 +27,17 @@ const postRegister = [
 
     const hashedPassword = await bcrypt.hashSync(password, 10);
 
-    await db.addUser(email, hashedPassword, firstname, lastname);
+    try {
+      await db.addUser(email, hashedPassword, firstname, lastname);
+    } catch (error) {
+      if (error.code) {
+        res
+          .status(400)
+          .json({ errors: [{ msg: 'A user with this email already exists' }] });
+        return;
+      }
+      console.error(error);
+    }
 
     res.status(201).send();
   },
