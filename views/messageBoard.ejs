@@ -5,6 +5,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Message board</title>
+  <script src="/scripts/messageBoard.js" defer></script>
+
 </head>
 
 <body>
@@ -14,6 +16,11 @@
   <div>
     <h2><%= message.title %></h2>
     <p><%= message.message_text %></p>
+
+    <% if (locals?.user?.is_admin) { %>
+    <button data-message-id="<%=message.message_id %>">Delete</button>
+    <% } %>
+
     <% if (locals?.user?.is_member) { %>
     <p><%=`By: ${message.firstname} ${message.lastname}`%></p>
     <p><%= new Date(Number(message.timestamp)).toLocaleString('en-EN', { weekday: "long", year: 'numeric', month: 'long', day: "numeric" }); %></p>

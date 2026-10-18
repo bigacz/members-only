@@ -33,6 +33,13 @@ async function addMessage(userId, title, message_text) {
   );
 }
 
+async function deleteMessage(messageId) {
+  const query = await dbPool.query(
+    'DELETE FROM messages WHERE message_id=$1;',
+    [messageId],
+  );
+}
+
 async function getAllMessages() {
   const query = await dbPool.query(
     `SELECT messages.*, users.user_id, users.firstname, users.lastname
@@ -48,6 +55,7 @@ export default {
   getUserById,
   addUser,
   addMessage,
+  deleteMessage,
 
   getAllMessages,
 };

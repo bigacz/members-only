@@ -101,4 +101,19 @@ const postMessageValidators = [
     .escape(),
 ];
 
-export { registerValidators, loginValidators, postMessageValidators };
+const deleteMessageValidators = [
+  body('messageId')
+    .trim()
+    .notEmpty()
+    .withMessage('Message id cannot be empty')
+    .isInt()
+    .withMessage('Message id must be an integer')
+    .escape(),
+];
+
+export {
+  registerValidators,
+  loginValidators,
+  postMessageValidators,
+  deleteMessageValidators,
+};

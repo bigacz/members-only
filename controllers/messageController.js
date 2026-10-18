@@ -1,5 +1,8 @@
 import { matchedData, validationResult } from 'express-validator';
-import { postMessageValidators } from './validators.js';
+import {
+  deleteMessageValidators,
+  postMessageValidators,
+} from './validators.js';
 import db from '../database/queries.js';
 
 const postMessage = [
@@ -23,9 +26,28 @@ const postMessage = [
   },
 ];
 
-const deleteMessage = (req, res) => {
-  //todo
-};
+const deleteMessage = [
+  ...deleteMessageValidators,
+  async (req, res) => {
+    if (!req.isAuthenticated()) {
+      return res.status(401).send('Unauthorized');
+    }
+    if (!req.user.is_admin) {
+      return res.status(403).send('Forbidden');
+    }
+
+    const result = validationResult(req);
+
+    if (!result.isEmpty()) {
+      return res.status(400).send({ errors: result.array() });
+    }
+
+    const { messageId } = matchedData(req);
+
+    await db.deleteMessage(messageId);
+    res.status(200).send('Succesfully deleted message');
+  },
+];
 
 const getMessages = async (req, res) => {
   const messages = await db.getAllMessages();
