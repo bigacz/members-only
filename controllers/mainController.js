@@ -5,6 +5,10 @@ import { body, matchedData, validationResult } from 'express-validator';
 import { registerValidators, loginValidators } from './validators.js';
 
 const getRegister = (req, res) => {
+  if (req.isAuthenticated()) {
+    return res.redirect('/');
+  }
+
   res.render('register');
 };
 
@@ -26,6 +30,10 @@ const postRegister = [
 ];
 
 const getLogin = (req, res) => {
+  if (req.isAuthenticated()) {
+    return res.redirect('/');
+  }
+
   return res.render('login');
 };
 
