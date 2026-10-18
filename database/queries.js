@@ -33,9 +33,21 @@ async function addMessage(userId, title, message_text) {
   );
 }
 
+async function getAllMessages() {
+  const query = await dbPool.query(
+    `SELECT messages.*, users.user_id, users.firstname, users.lastname
+    FROM messages 
+    INNER JOIN users ON messages.user_id = users.user_id;`,
+  );
+
+  return query.rows;
+}
+
 export default {
   getUserByEmail,
   getUserById,
   addUser,
   addMessage,
+
+  getAllMessages,
 };

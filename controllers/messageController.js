@@ -27,8 +27,11 @@ const deleteMessage = (req, res) => {
   //todo
 };
 
-const getMessages = (req, res) => {
-  //todo
+const getMessages = async (req, res) => {
+  const messages = await db.getAllMessages();
+  const user = req.user;
+
+  res.render('messageBoard', { messages, user });
 };
 
 const getMessageNew = (req, res) => {
