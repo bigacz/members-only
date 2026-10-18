@@ -50,10 +50,27 @@ const postLogin = [
   },
 ];
 
+const postLogout = [
+  (req, res) => {
+    if (req.isAuthenticated()) {
+      req.logout((error) => {
+        if (error) {
+          throw error;
+        }
+      });
+      res.status(200).send('Logged out succesfully');
+    } else {
+      res.status(401).send(`Can't log out`);
+    }
+  },
+];
+
 export default {
   getRegister,
   postRegister,
 
   getLogin,
   postLogin,
+
+  postLogout,
 };

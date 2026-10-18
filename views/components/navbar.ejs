@@ -5,7 +5,7 @@
   <a href="/login">Log in</a>
   <a href="/register">Register</a>
   <% } %>
-  <% if(locals?.user.is_member) { %>
+  <% if(locals?.user?.is_member) { %>
   <a href="/message/new">New message</a>
   <% } %>
   <% if(locals.user) { %>

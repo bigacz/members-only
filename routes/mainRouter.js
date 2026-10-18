@@ -14,6 +14,8 @@ mainRouter.get('/login', mainController.getLogin);
 
 mainRouter.post('/login', mainController.postLogin);
 
+mainRouter.post('/logout', mainController.postLogout);
+
 mainRouter.get('/', (req, res) => {
   res.redirect('/messages');
 });

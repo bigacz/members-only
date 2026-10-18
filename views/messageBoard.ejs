@@ -14,7 +14,7 @@
   <div>
     <h2><%= message.title %></h2>
     <p><%= message.message_text %></p>
-    <% if (locals.user.is_member) { %>
+    <% if (locals?.user?.is_member) { %>
     <p><%=`By: ${message.firstname} ${message.lastname}`%></p>
     <p><%= new Date(Number(message.timestamp)).toLocaleString('en-EN', { weekday: "long", year: 'numeric', month: 'long', day: "numeric" }); %></p>
     <% } %>
