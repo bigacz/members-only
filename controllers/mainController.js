@@ -2,7 +2,11 @@ import passport from 'passport';
 import bcrypt from 'bcryptjs';
 import db from '../database/queries.js';
 import { body, matchedData, validationResult } from 'express-validator';
-import { registerValidators, loginValidators } from './validators.js';
+import {
+  registerValidators,
+  loginValidators,
+  postJoinValidators,
+} from './validators.js';
 
 const getRegister = (req, res) => {
   if (req.isAuthenticated()) {
@@ -73,6 +77,43 @@ const postLogout = [
   },
 ];
 
+const getJoin = [
+  (req, res) => {
+    if (!req.isAuthenticated()) return res.status(401).send('Unauthorized');
+
+    res.render('join');
+  },
+];
+
+const postJoin = [
+  ...postJoinValidators,
+  async (req, res) => {
+    const result = validationResult(req);
+
+    if (!req.isAuthenticated()) {
+      return res.status(401).send('Unauthorized');
+    }
+
+    if (!result.isEmpty()) {
+      return res.status(400).send({ errors: result.array() });
+    }
+
+    const { code } = matchedData(req);
+
+    if (code === process.env.MEMBER_CODE) {
+      await db.grantMembership(req.user.user_id);
+      return res.status(200).json({ permission: 'member' });
+    }
+
+    if (code === process.env.ADMIN_CODE) {
+      await db.grantAdmin(req.user.user_id);
+      return res.status(200).json({ permission: 'admin' });
+    }
+
+    res.status(400).json({ errors: [{ msg: 'Incorrect code' }] });
+  },
+];
+
 export default {
   getRegister,
   postRegister,
@@ -81,4 +122,7 @@ export default {
   postLogin,
 
   postLogout,
+
+  getJoin,
+  postJoin,
 };

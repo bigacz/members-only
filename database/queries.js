@@ -50,6 +50,20 @@ async function getAllMessages() {
   return query.rows;
 }
 
+async function grantMembership(messageId) {
+  const query = await dbPool.query(
+    `UPDATE users SET is_member = 't' WHERE user_id=$1;`,
+    [messageId],
+  );
+}
+
+async function grantAdmin(messageId) {
+  const query = await dbPool.query(
+    `UPDATE users SET is_member = 't', is_admin='t' WHERE user_id=$1;`,
+    [messageId],
+  );
+}
+
 export default {
   getUserByEmail,
   getUserById,
@@ -58,4 +72,7 @@ export default {
   deleteMessage,
 
   getAllMessages,
+
+  grantMembership,
+  grantAdmin,
 };

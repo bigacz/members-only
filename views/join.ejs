@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Join the club</title>
+  <script src="/scripts/join.js" defer></script>
+
+</head>
+
+<body>
+  <%- include('components/navbar.ejs') %>
+
+  <form id="form">
+    <ul id="form_error-panel"></ul>
+
+    </ul>
+    <label for="code">Enter code:</label>
+    <input type="text" id="code" name="code">
+
+    <button type="submit" id="form_submit">Join</button>
+
+    <div id="form_result-panel"></div>
+  </form>
+
+</body>
+
+</html>

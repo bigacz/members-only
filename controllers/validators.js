@@ -111,9 +111,14 @@ const deleteMessageValidators = [
     .escape(),
 ];
 
+const postJoinValidators = [
+  body('code').trim().notEmpty().withMessage('Code cannot be empty').escape(),
+];
+
 export {
   registerValidators,
   loginValidators,
   postMessageValidators,
   deleteMessageValidators,
+  postJoinValidators,
 };

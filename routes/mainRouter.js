@@ -16,6 +16,10 @@ mainRouter.post('/login', mainController.postLogin);
 
 mainRouter.post('/logout', mainController.postLogout);
 
+mainRouter.get('/join', mainController.getJoin);
+
+mainRouter.post('/join', mainController.postJoin);
+
 mainRouter.get('/', (req, res) => {
   res.redirect('/messages');
 });
