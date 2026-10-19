@@ -39,6 +39,11 @@ app.use((req, res, next) => {
 });
 app.use(mainRouter);
 
+app.use((error, req, res, next) => {
+  console.error(error);
+  res.render('error');
+});
+
 const port = process.env.APP_PORT || 3000;
 app.listen(port, (error) => {
   if (error) {
