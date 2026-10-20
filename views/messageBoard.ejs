@@ -7,27 +7,28 @@
   <title>Message board</title>
   <script src="/scripts/messageBoard.js" defer></script>
   <link rel="stylesheet" href="/styles/main.css">
+  <link rel="stylesheet" href="/styles/messageBoard.css">
 
 </head>
 
 <body>
   <%- include('components/navbar.ejs') %>
 
-  <% locals.messages.forEach((message) => { %>
-  <div>
-    <h2><%= message.title %></h2>
-    <p><%= message.message_text %></p>
-
-    <% if (locals?.user?.is_admin) { %>
-    <button data-message-id="<%=message.message_id %>">Delete</button>
-    <% } %>
-
-    <% if (locals?.user?.is_member) { %>
-    <p><%=`By: ${message.firstname} ${message.lastname}`%></p>
-    <p><%= new Date(Number(message.timestamp)).toLocaleString('en-EN', { weekday: "long", year: 'numeric', month: 'long', day: "numeric" }); %></p>
-    <% } %>
+  <div class="message-board">
+    <% locals.messages.forEach((message) => { %>
+    <div class="message-wrapper">
+      <h2 class="message-wrapper_title"><%= message.title %></h2>
+      <p class="message-wrapper_text"><%= message.message_text %></p>
+      <% if (locals?.user?.is_admin) { %>
+      <button class="message-wrapper_button" data-message-id="<%=message.message_id %>">Delete</button>
+      <% } %>
+      <% if (locals?.user?.is_member) { %>
+      <p class="message-wrapper_by"><%=`By: ${message.firstname} ${message.lastname}`%></p>
+      <p class="message-wrapper_date"><%= new Date(Number(message.timestamp)).toLocaleString('en-EN', { weekday: "long", year: 'numeric', month: 'long', day: "numeric" }); %></p>
+      <% } %>
+    </div>
+    <%}) %>
   </div>
-  <%}) %>
 </body>
 
 </html>
