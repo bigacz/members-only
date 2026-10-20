@@ -1,0 +1,38 @@
+nav {
+  background-color: rgb(222, 222, 222);
+  display: grid;
+  grid-auto-flow: column;
+  grid-template-columns: max-content max-content max-content 1fr;
+}
+
+nav > * {
+  display: inline-block;
+  padding: 1rem;
+}
+
+nav > * {
+  background-color: rgb(222, 222, 222);
+  font-weight: 600;
+  font-size: 1.2rem;
+  text-decoration: none;
+  color: black;
+}
+
+nav > *:hover {
+  background-color: rgb(182, 182, 182);
+  transition: 0.2s;
+}
+
+nav > *:active {
+  background-color: rgb(158, 158, 158);
+  transition: 0.2s;
+}
+
+nav > button {
+  cursor: pointer;
+  padding: 1rem;
+
+  border: 0;
+
+  justify-self: end;
+}
